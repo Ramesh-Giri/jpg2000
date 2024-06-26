@@ -3,12 +3,7 @@
     "builds": [
       {
         "src": "api/convertAndSaveImage.js",
-        "use": "@vercel/node",
-        "config": {
-          "includeFiles": [
-            "openjpeg/bin/opj_decompress"
-          ]
-        }
+        "use": "@vercel/node"
       }
     ],
     "routes": [
