@@ -11,6 +11,11 @@
         "src": "/api/(.*)",
         "dest": "/api/convertAndSaveImage.js"
       }
-    ]
+    ],
+    "build": {
+      "env": {
+        "OPENJPEG_VERSION": "v2.5.0"
+      }
+    }
   }
   

@@ -14,7 +14,7 @@ app.post('/api/convertAndSaveImage', async (req, res) => {
   const tmpdir = os.tmpdir();
   const jp2FilePath = path.join(tmpdir, 'input.jp2');
   const outputFilePath = path.join(tmpdir, 'output.png');
-  const opjDecompressPath = path.join(__dirname, '../openjpeg/bin/opj_decompress');
+  const opjDecompressPath = path.join(__dirname, '../bin/opj_decompress'); // Ensure this path matches where the binary is extracted
 
   try {
     const byteArray = req.body.byteArray;
