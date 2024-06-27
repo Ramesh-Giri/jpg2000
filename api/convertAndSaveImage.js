@@ -20,11 +20,11 @@ app.post('/api/convertAndSaveImage', async (req, res) => {
     const byteArray = req.body.byteArray;
 
     if (!byteArray || !Array.isArray(byteArray)) {
-      console.error('Invalid byteArray');
+      console.error('Invalid byteArray:', byteArray);
       return res.status(400).send('Invalid byteArray.');
     }
 
-    console.log('Byte array received');
+    console.log('Byte array received:', byteArray);
 
     // Write byte array to temporary JP2 file
     fs.writeFileSync(jp2FilePath, Buffer.from(byteArray));
@@ -33,9 +33,13 @@ app.post('/api/convertAndSaveImage', async (req, res) => {
     await new Promise((resolve, reject) => {
       exec(`${opjDecompressPath} -i ${jp2FilePath} -o ${outputFilePath}`, (error, stdout, stderr) => {
         if (error) {
-          console.error(`exec error: ${error}`);
+          console.error('exec error:', error);
+          console.error('stdout:', stdout);
+          console.error('stderr:', stderr);
           return reject(error);
         }
+        console.log('Conversion stdout:', stdout);
+        console.log('Conversion stderr:', stderr);
         resolve();
       });
     });
