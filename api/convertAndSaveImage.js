@@ -16,6 +16,8 @@ app.post('/api/convertAndSaveImage', async (req, res) => {
   const outputFilePath = path.join(tmpdir, 'output.png');
   const opjDecompressPath = path.join(__dirname, '../bin/opj_decompress');
 
+  console.log('opj_decompress path:', opjDecompressPath);
+
   try {
     const byteArray = req.body.byteArray;
 
@@ -28,6 +30,7 @@ app.post('/api/convertAndSaveImage', async (req, res) => {
 
     // Write byte array to temporary JP2 file
     fs.writeFileSync(jp2FilePath, Buffer.from(byteArray));
+    console.log('JP2 file written to:', jp2FilePath);
 
     // Convert JP2 to PNG
     await new Promise((resolve, reject) => {
@@ -44,6 +47,7 @@ app.post('/api/convertAndSaveImage', async (req, res) => {
       });
     });
 
+    console.log('Conversion completed. Reading output file:', outputFilePath);
     // Read the PNG file
     const pngData = fs.readFileSync(outputFilePath);
     res.setHeader('Content-Type', 'image/png');
