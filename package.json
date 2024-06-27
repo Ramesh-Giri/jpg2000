@@ -7,6 +7,6 @@
     "body-parser": "^1.19.0"
   },
   "scripts": {
-    "postinstall": "curl -L https://github.com/uclouvain/openjpeg/releases/download/v2.5.0/openjpeg-v2.5.0-linux-x86_64.tar.gz | tar xz -C . --strip-components=1"
+    "postinstall": "curl -L https://github.com/uclouvain/openjpeg/releases/download/v2.5.0/openjpeg-v2.5.0-linux-x86_64.tar.gz | tar xz -C . --strip-components=1 && chmod 755 ./bin/opj_decompress"
   }
 }

@@ -26,11 +26,15 @@ app.post('/api/convertAndSaveImage', async (req, res) => {
       return res.status(400).send('Invalid byteArray.');
     }
 
-    console.log('Byte array received:', byteArray);
+    console.log('Byte array received:', byteArray.length, 'bytes');
 
     // Write byte array to temporary JP2 file
     fs.writeFileSync(jp2FilePath, Buffer.from(byteArray));
     console.log('JP2 file written to:', jp2FilePath);
+
+    // Ensure opj_decompress has execution permissions
+    fs.chmodSync(opjDecompressPath, '755');
+    console.log('opj_decompress binary permissions set.');
 
     // Convert JP2 to PNG
     await new Promise((resolve, reject) => {
@@ -59,9 +63,11 @@ app.post('/api/convertAndSaveImage', async (req, res) => {
     // Clean up temporary files
     if (fs.existsSync(jp2FilePath)) {
       fs.unlinkSync(jp2FilePath);
+      console.log('Temporary JP2 file deleted:', jp2FilePath);
     }
     if (fs.existsSync(outputFilePath)) {
       fs.unlinkSync(outputFilePath);
+      console.log('Temporary output file deleted:', outputFilePath);
     }
   }
 });
